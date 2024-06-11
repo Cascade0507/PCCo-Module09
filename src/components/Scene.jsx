@@ -8,12 +8,19 @@ import {
     Sphere,
     useGLTF,
 } from "@react-three/drei";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { useLoader } from "@react-three/fiber";
+import { DRACOLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import React, { useEffect, useState } from "react";
 import { DEG2RAD } from "three/src/math/MathUtils";
 
 export const Scene = ({ mainColor, path, ...props }) => {
-    const { nodes, materials, scene } = useGLTF(path); //load 3d scene
+    const { nodes, materials, scene } = useLoader(GLTFLoader,path, (loader) => {
+        const dracoLoader = new DRACOLoader()
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
+        loader.setDRACOLoader(dracoLoader)
+      }) //load 3d scene
 
     const [podiumScale, setPodiumScale] = useState(1);
     const [podiumPositionY, setPodiumPositionY] = useState(0);
@@ -116,6 +123,7 @@ export const Scene = ({ mainColor, path, ...props }) => {
     );
 };
 
-useGLTF.preload("/models/mcqueen.glb");
-useGLTF.preload("/models/cruz.glb");
-useGLTF.preload("/models/storm.glb");
+// useGLTF.preload("/models/mcqueen.glb");
+// useGLTF.preload("/models/cruz.glb");
+// useGLTF.preload("/models/storm.glb");
+
