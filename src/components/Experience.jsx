@@ -11,11 +11,11 @@ import { useThree } from "@react-three/fiber";
 import { useAtom } from "jotai";
 import { useControls } from "leva";
 import { useEffect, useRef, useState } from "react";
-import { homeAtom, slideAtom } from "./Overlay";
+import { homeAtom } from "./Overlay";
 import { Scene } from "./Scene";
-import { dispAtom } from "./Overlay";
+import { dispAtom, slideAtom } from "./Overlay";
 import { a, useSpring } from "@react-spring/three";
-//import Background from "three/examples/jsm/renderers/common/Background.js";
+//import Background from "three/examples/jsm/renderers/common/Background. js";
 
 // Array of three scenes with three different models
 export const scenes = [
@@ -40,7 +40,8 @@ export const scenes = [
 ];
 
 export const Experience = () => {
-  const [index,setIndex] = useState(0);
+  const [slide, setSlide] = useAtom(slideAtom);
+  const [visible, setVisible] = useState(1);
   const viewport = useThree((state) => state.viewport);
   const { slideDistance } = useControls({
     slideDistance: {
@@ -51,7 +52,16 @@ export const Experience = () => {
   });
 
   const Env = ({ scene }) => {
-    return (
+
+    // useEffect(() => {
+    //   setVisible(false);      //set a timer to delay the overlay and model change transitions equally
+    //   setTimeout(() => {
+    //     setVisible(true);
+    //   }, 2600);
+    // }, [slide]);
+
+    return ( 
+    <>
       <mesh position={[0, 0, 0]}>
         <planeGeometry args={[viewport.width, viewport.height]} />
         <meshBasicMaterial toneMapped={false}>
@@ -64,11 +74,10 @@ export const Experience = () => {
           </RenderTexture>
         </meshBasicMaterial>
       </mesh>
+      </>
     );
   };
-  const [, setSlide] = useAtom(slideAtom);
-  const [, setHome] = useAtom(homeAtom);
-  const [, setHomeDisp] = useAtom(dispAtom);
+
 
   // const handleSphereClick = (index) => {
   //   setSphere(index);
@@ -81,8 +90,6 @@ export const Experience = () => {
     <>
       <ambientLight intensity={0.2} />
       <Environment preset={"city"} />
-      <OrbitControls/>
-      
       <Grid
         position-y={-viewport.height / 2}
         sectionSize={1}
@@ -96,7 +103,7 @@ export const Experience = () => {
         fadeStrength={5}
       />
       {/* map through all scenes to render a component for each of them */}
-        <Env scene={scenes[index]} />
+        <Env scene={scenes[slide]} />
     </>
   );
 };

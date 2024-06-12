@@ -31,25 +31,25 @@ export const Overlay = () => {
     setTimeout(() => {
       setDisplaySlide(slide);
       setVisible(true);
-    }, 2600);
+    }, 2000);
   }, [slide]);
 
 
 
- function handleLogoClick()
- {
-    setHome(!home);
-    setTimeout(() => {
-      if(home)
-        setHomeDisp(true);
-      else 
-        setHomeDisp(false);
-    }, 1000);
-  };
+//  function handleLogoClick()
+//  {
+//     setHome(!home);
+//     setTimeout(() => {
+//       if(home)
+//         setHomeDisp(true);
+//       else 
+//         setHomeDisp(false);
+//     }, 1000);
+//   };
 
   return (
     <div className={`overlay ${visible ? "visible" : "invisible"}`}>
-      <img src={logo} alt="Logo" className="logo" onClick={handleLogoClick} />
+      <img src={logo} alt="Logo" className="logo" />
       {homeDisp && (
       <>
         <div className="nav">
