@@ -12,7 +12,7 @@ export const dispAtom = atom(true);
 
 export const Overlay = () => {
   const [slide, setSlide] = useAtom(slideAtom); //represents current slide indext
-  const [home, setHome] = useAtom(homeAtom); //indicates if logo was clicked
+  // const [home, setHome] = useAtom(homeAtom); //indicates if logo was clicked
   const [displaySlide, setDisplaySlide] = useState(slide); //index of slide to be displayed
   const [visible, setVisible] = useState(false); //visibility of overlay
   const [homeDisp, setHomeDisp] = useAtom(dispAtom); //if UI elements should be displayed or not
@@ -36,16 +36,7 @@ export const Overlay = () => {
 
 
 
-//  function handleLogoClick()
-//  {
-//     setHome(!home);
-//     setTimeout(() => {
-//       if(home)
-//         setHomeDisp(true);
-//       else 
-//         setHomeDisp(false);
-//     }, 1000);
-//   };
+
 
   return (
     <div className={`overlay ${visible ? "visible" : "invisible"}`}>

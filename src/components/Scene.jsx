@@ -16,7 +16,7 @@ import React, { useEffect, useState } from "react";
 import { DEG2RAD } from "three/src/math/MathUtils";
 
 export const Scene = ({ mainColor, path, ...props }) => {
-    const { nodes, materials, scene } = useLoader(GLTFLoader,path, (loader) => {
+    const { scene } = useLoader(GLTFLoader,path, (loader) => {
         const dracoLoader = new DRACOLoader()
         dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
         loader.setDRACOLoader(dracoLoader)
@@ -31,10 +31,10 @@ export const Scene = ({ mainColor, path, ...props }) => {
         const initialPositionY = -0.15 * initialScale; // Adjust podium's Y position based on scale
         setPodiumScale(initialScale);
         setPodiumPositionY(initialPositionY);
-    }, []);
+    // }, []);
 
-    useEffect(() => {
-        // Go through each object to cast shadows
+    // useEffect(() => {
+    //     // Go through each object to cast shadows
         scene.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -122,8 +122,3 @@ export const Scene = ({ mainColor, path, ...props }) => {
         </>
     );
 };
-
-// useGLTF.preload("/models/mcqueen.glb");
-// useGLTF.preload("/models/cruz.glb");
-// useGLTF.preload("/models/storm.glb");
-
