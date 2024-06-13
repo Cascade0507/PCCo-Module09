@@ -19,19 +19,16 @@ import { dispAtom, slideAtom } from "./Overlay";
 export const scenes = [
   {
     path: "/models/mcqueen.glb",
-    mainColor: "#FFAE9E",
     name: "Lightning McQueen",
     description: "Focus. Speed. I am Speed. One winner, forty two losers. I eat losers for breakfast.",
   },
   {
     path: "/models/cruz.glb",
-    mainColor: "#FCEE95",
     name: "Cruz Ramirez",
     description: "I am so excited that I get to train you. These young guys are great and all, but I like a challenge.",
   },
   {
     path: "/models/storm.glb",
-    mainColor: "#9BC7F6",
     name: "Jackson Storm",
     description: "You have no idea what a pleasure it is for me to finally beat you.",
   },

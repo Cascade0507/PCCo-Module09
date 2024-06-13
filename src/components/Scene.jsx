@@ -4,12 +4,15 @@ import {
     Lightformer,
     OrbitControls,
     PerspectiveCamera,
+    ContactShadows,
+    Effects,
     RandomizedLight,
     Sphere,
     useGLTF,
 } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { useLoader } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { DRACOLoader } from "three/examples/jsm/Addons.js";
 import * as THREE from "three";
 import React, { useEffect, useState } from "react";
@@ -22,19 +25,10 @@ export const Scene = ({ mainColor, path, ...props }) => {
         loader.setDRACOLoader(dracoLoader)
       }) //load 3d scene
 
-    const [podiumScale, setPodiumScale] = useState(1);
-    const [podiumPositionY, setPodiumPositionY] = useState(0);
+    const hdrTexture = useLoader(RGBELoader, 'public/models/garage.hdr');
+    hdrTexture.mapping = THREE.EquirectangularReflectionMapping;
 
-    // Set initial podium scale
     useEffect(() => {
-        const initialScale = Math.min(1.2, Math.max(0.5, window.innerWidth / 1920));
-        const initialPositionY = -0.15 * initialScale; // Adjust podium's Y position based on scale
-        setPodiumScale(initialScale);
-        setPodiumPositionY(initialPositionY);
-    // }, []);
-
-    // useEffect(() => {
-    //     // Go through each object to cast shadows
         scene.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -42,65 +36,42 @@ export const Scene = ({ mainColor, path, ...props }) => {
             }
         });
 
-        // Adjust podium position and scale based on viewport size
-        const ratioScale = Math.min(1.2, Math.max(0.5, window.innerWidth / 1920));
-        const podiumPositionY = -0.15 * ratioScale; // Adjust podium's Y position based on scale
-        setPodiumScale(ratioScale);
-        setPodiumPositionY(podiumPositionY);
     }, [scene]);
+    const ratioScale = Math.min(1.2, Math.max(0.5, window.innerWidth / 1920));
+
 
     return (
         <>
-            <color attach="background" args={["#ffffff"]} />
             <group {...props} dispose={null}>
-                {/* create a new camera for each scene and have orbit controls for each scene */}
-                <PerspectiveCamera makeDefault position={[3, 3, 8]} near={0.5} />
-                <OrbitControls
-                    autoRotate
-                    enablePan={false}
-                    maxPolarAngle={DEG2RAD * 75}
-                    minDistance={6}
-                    maxDistance={10}
-                    autoRotateSpeed={0.6}
-                />
-
-                <primitive object={scene} scale={podiumScale} />
-                {/*Podium */}
-                <mesh position={[0, podiumPositionY, 0]} receiveShadow>
-                    <cylinderGeometry args={[2.5, 2.6, 0.14, 64]} />
-                    <meshStandardMaterial color={"#555555"} metalness={0.8} roughness={0.4} />
+                <PerspectiveCamera makeDefault position={[0,0,12]} near={0.5} />
+                <primitive object={scene} scale={1.5*ratioScale} rotation={[0,Math.PI/1.5,0]}/>
+                
+                <hemisphereLight intensity={0.5} />
+                <ContactShadows resolution={1024} frames={1} position={[0,0, 0]} scale={15} blur={0.7} opacity={1} far={25} />
+                
+                <pointLight position={[0, 3, 0]} intensity={1} color="white" />
+                <mesh scale={5*ratioScale} position={[4*ratioScale, -0.1, -0.8]} rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}>
+                    <ringGeometry args={[0.9, 1, 4, 1]} />
+                    <meshStandardMaterial color="white" roughness={0.75}/>
+                </mesh>
+                <mesh scale={5*ratioScale} position={[-4.3*ratioScale, -0.1, -0.4]} rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}>
+                    <ringGeometry args={[0.9, 1, 3, 1]} />
+                    <meshStandardMaterial color="white" roughness={0.75} />
                 </mesh>
 
-                <pointLight
-                    position={[0, 5, 0]}
-                    intensity={1.5}
-                    distance={10}
-                    decay={2}
-                    castShadow
-                />
+                <Environment files={'/models/garage.hdr'} background resolution={2048}>
+                    
+                    <color attach="background" args={["#15151a"]} />
 
-                <ambientLight intensity={0.5} />
-                <AccumulativeShadows
-                    frames={100}
-                    alphaTest={0.6}
-                    scale={30}
-                    position={[0, -0.008, 0]}
-                    opacity={0.8}
-                >
-                    <RandomizedLight
-                        amount={4}
-                        radius={9}
-                        intensity={10}
-                        ambient={0.25}
-                        position={[10, 5, 15]}
-                    />
-                </AccumulativeShadows>
-                <Environment blur={0.8} background>
-                    {/* sphere is the background */}
-                    <Sphere scale={15}>
-                        <meshBasicMaterial color={mainColor} side={THREE.BackSide} />
-                    </Sphere>
-
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -9]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -6]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -3]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 0]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 3]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 6]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 9]} scale={[10, 1, 1]} />
+                    {/* Key */}
+                    <Lightformer form="ring" color="red" intensity={10} scale={2} position={[10, 8, 10]} onUpdate={(self) => self.lookAt(0, 0, 0)} />
                     <Lightformer
                         position={[0, 5, -2]}
                         form="ring"
@@ -109,15 +80,10 @@ export const Scene = ({ mainColor, path, ...props }) => {
                         scale={[10, 5]}
                         target={[0, 0, 0]}
                     />
-                    <Lightformer
-                        position={[0, 5, -2]}
-                        form="rect"
-                        intensity={2}
-                        color="#F0CDCD"
-                        scale={[10, 5]}
-                        target={[0, 0, 0]}
-                    />
                 </Environment>
+                <Effects />
+                <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} />
+
             </group>
         </>
     );
