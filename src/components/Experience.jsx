@@ -1,42 +1,31 @@
-import {
-  CameraControls,
-  Grid,
-  Environment,
-  MeshDistortMaterial,
-  RenderTexture,
-  useCursor,
-  OrbitControls
-} from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { useAtom } from "jotai";
 import { useControls } from "leva";
-import { useEffect, useRef, useState } from "react";
-import { homeAtom } from "./Overlay";
 import { Scene } from "./Scene";
-import { dispAtom, slideAtom } from "./Overlay";
+import { slideAtom } from "./Overlay";
 
 // Array of three scenes with three different models
 export const scenes = [
   {
     path: "/models/gt3rs.glb",
-    name: "Lightning McQueen",
+    name: "911 GT3RS",
     description: "Focus. Speed. I am Speed. One winner, forty two losers. I eat losers for breakfast.",
   },
   {
-    path: "/models/SFerrari.glb",
-    name: "Cruz Ramirez",
+    path: "/models/918.glb",
+    name: "918 spyder",
     description: "I am so excited that I get to train you. These young guys are great and all, but I like a challenge.",
   },
   {
-    path: "/models/skyline.glb",
-    name: "Gay",
+    path: "/models/carrera.glb",
+    name: "Carrera",
     description: "You have no idea what a pleasure it is for me to finally beat to you.",
   },
 ];
 
 export const Experience = () => {
-  const [slide, setSlide] = useAtom(slideAtom);
-  // const [visible, setVisible] = useState(1);
+  const [slide] = useAtom(slideAtom);
   const viewport = useThree((state) => state.viewport);
   const { slideDistance } = useControls({
     slideDistance: {
@@ -46,45 +35,10 @@ export const Experience = () => {
     },
   });
 
-  // const Env = ({ scene }) => {
-
-
-  //   return ( 
-  //   <>
-  //     <mesh position={[0, 0, 0]}>
-  //       <planeGeometry args={[viewport.width, viewport.height]} />
-  //       <meshBasicMaterial toneMapped={false}>
-  //         <RenderTexture attach="map">
-  //           <Scene
-  //             {...scene}
-  //             path={scene.path}
-  //             mainColor={scene.mainColor}
-  //           />
-  //         </RenderTexture>
-  //       </meshBasicMaterial>
-  //     </mesh>
-  //     </>
-  //   );
-  // };
-
   return (
     <>
       <ambientLight intensity={0.2} />
       <Environment preset={"city"} />
-      {/* <Grid
-        position-y={-viewport.height / 2}
-        sectionSize={1}
-        sectionColor={"red"}
-        sectionThickness={1}
-        cellSize={0.5}
-        cellColor={"#000000"}
-        cellThickness={0.6}
-        infiniteGrid
-        fadeDistance={50}
-        fadeStrength={5}
-      /> */}
-      {/* map through all scenes to render a component for each of them */}
-        {/* <Env scene={scenes[slide]} /> */}
         <Scene {...scenes[slide]}/>
     </>
   );

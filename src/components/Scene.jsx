@@ -9,11 +9,9 @@ import {
     useGLTF,
 } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
 import { DRACOLoader } from "three/examples/jsm/Addons.js";
-import * as THREE from "three";
-import React, { useEffect, useState } from "react";
-import { DEG2RAD } from "three/src/math/MathUtils";
+import React, { useEffect } from "react";
 import {Effects} from "./Effect"
 
 export const Scene = ({path, ...props }) => {
@@ -43,8 +41,6 @@ export const Scene = ({path, ...props }) => {
                 
                 <hemisphereLight intensity={0.5} />
                 <ContactShadows resolution={1024} frames={1} position={[0,0, 0]} scale={15} blur={0.7} opacity={1} far={25} />
-                
-                <pointLight position={[0, 3, 0]} intensity={1} color="white" />
 
                 
                 <mesh scale={3*ratioScale} position={[3*ratioScale, -0.1, -0.8]} rotation={[-Math.PI / 2, 0, Math.PI / 2.5]}>
@@ -61,13 +57,13 @@ export const Scene = ({path, ...props }) => {
                     
                     <color attach="background" args={["#15151a"]} />
 
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -9]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -6]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, -3]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 0]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 3]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 6]} scale={[10, 1, 1]} />
-                    <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 4, 9]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1.5} rotation-x={Math.PI / 2} position={[0, 4, -9]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1} rotation-x={Math.PI / 2} position={[0, 4, -6]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1.5} rotation-x={Math.PI / 2} position={[0, 4, -3]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1} rotation-x={Math.PI / 2} position={[0, 4, 0]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1.5} rotation-x={Math.PI / 2} position={[0, 4, 3]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1} rotation-x={Math.PI / 2} position={[0, 4, 6]} scale={[10, 1, 1]} />
+                    <Lightformer intensity={1.5} rotation-x={Math.PI / 2} position={[0, 4, 9]} scale={[10, 1, 1]} />
                     {/* Key */}
                     {/* <Lightformer form="ring" color="red" intensity={10} scale={2} position={[10, 7, 10]} onUpdate={(self) => self.lookAt(0, 0, 0)} /> */}
                     
@@ -88,7 +84,7 @@ export const Scene = ({path, ...props }) => {
                     />
                 </mesh>
                 <Effects />
-                <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} />
+                <OrbitControls enablePan={false} enableZoom={true} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} minDistance={5} maxDistance={10}/>
                 
             </group>
         </>
