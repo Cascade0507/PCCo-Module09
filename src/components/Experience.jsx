@@ -18,19 +18,19 @@ import { dispAtom, slideAtom } from "./Overlay";
 // Array of three scenes with three different models
 export const scenes = [
   {
-    path: "/models/mcqueen.glb",
+    path: "/models/gt3rs.glb",
     name: "Lightning McQueen",
     description: "Focus. Speed. I am Speed. One winner, forty two losers. I eat losers for breakfast.",
   },
   {
-    path: "/models/cruz.glb",
+    path: "/models/SFerrari.glb",
     name: "Cruz Ramirez",
     description: "I am so excited that I get to train you. These young guys are great and all, but I like a challenge.",
   },
   {
-    path: "/models/storm.glb",
-    name: "Jackson Storm",
-    description: "You have no idea what a pleasure it is for me to finally beat you.",
+    path: "/models/skyline.glb",
+    name: "Gay",
+    description: "You have no idea what a pleasure it is for me to finally beat to you.",
   },
 ];
 
