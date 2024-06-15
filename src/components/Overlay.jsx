@@ -62,7 +62,6 @@ export const Overlay = () => {
         </div>
         <div className="content">
           <h1 className="title">{scenes[displaySlide].name}</h1>
-          <p className="description">{scenes[displaySlide].description}</p>
         </div>
       </>
       )}

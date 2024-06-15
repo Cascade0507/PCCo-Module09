@@ -20,8 +20,9 @@ export const scenes = [
   {
     path: "/models/carrera.glb",
     name: "Carrera",
-    description: "You have no idea what a pleasure it is for me to finally beat to you.",
+    description: "You have no idea what a pleasure it is for me to finally beat you.",
   },
+  
 ];
 
 export const Experience = () => {
