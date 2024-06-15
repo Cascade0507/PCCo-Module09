@@ -10,17 +10,14 @@ export const scenes = [
   {
     path: "/models/gt3rs.glb",
     name: "911 GT3RS",
-    description: "Focus. Speed. I am Speed. One winner, forty two losers. I eat losers for breakfast.",
   },
   {
     path: "/models/918.glb",
     name: "918 spyder",
-    description: "I am so excited that I get to train you. These young guys are great and all, but I like a challenge.",
   },
   {
     path: "/models/carrera.glb",
     name: "Carrera",
-    description: "You have no idea what a pleasure it is for me to finally beat you.",
   },
   
 ];
